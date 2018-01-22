@@ -193,4 +193,49 @@ iex(28)>
 
 **creating functions without args**
 
+You can create functions without args. You will have to admit them.
+
 ```
+Interactive Elixir (1.3.3) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> one_plus_one = fn -> 1 + 1 end
+#Function<20.52032458/0 in :erl_eval.expr/5>
+iex(2)> one_plus_one.()
+2
+iex(3)>
+
+
+```
+
+We can create functions with more than one argument. We will need to seperate them with commas.
+
+e.g
+
+```
+
+iex(3)> total_price = fn price, quantity -> price * quantity end
+#Function<12.52032458/2 in :erl_eval.expr/5>
+iex(4)> total_price.(5, 6)
+30
+iex(5)>
+
+
+```
+
+Elixir has a limit of 255 characters that it will accept as a function parameter Just like JS. **keep the number of parameters below 5**
+If you find yourself having to use 5 + n parameters, you should try using a data structures -- like tuples, lists, structs, or maps or most likely you just need to split your function up. Stay modular.
+
+## Functions as First-Class-Citizens
+
+Functions are first class citizens does not mean they get to fly first class. It means that are like any value. It's an important feature that comes from **lambda calculus.**
+
+In IEX functions are values of **type** function. We will build a function like so :
+
+```
+
+iex(5)> total_price = fn price, fee -> price + fee.(price) end
+#Function<12.52032458/2 in :erl_eval.expr/5>
+iex(6)>
+
+```
+
+Here the function *total_price* receives two arguments. The first function is a number that will represent the price. **The** *tax* **parameter expects a function. We will call the given function, passing the price. The final result of the function is the result of the price plus the result of the tax function. Do you follow?**
